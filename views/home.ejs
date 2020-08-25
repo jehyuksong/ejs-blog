@@ -1,11 +1,24 @@
 <%- include('partials/header') %>
 
+<a class="write" href="/compose">글 작성하기</a>
 <h1>Home</h1>
-<p><%= startingContent %></p>
+<p> <%= startingContent %> </p>
 
 <% posts.forEach((post) => { %>
+
 <h1><%=post.title%></h1>
-<p><%=post.content.substring(0,20)+' ... ';%><a href="/posts/<%= post.title %>">Read More</a></p>
+<% if(post.content.length>=20){ %>
+<form action="/delete" method="POST" class="inlineForm">
+  <p class="inlineForm"><%=post.content.substring(0,20)+' ... ';%><a href="/posts/<%= post.id %>"> 자세히 보기 </a>
+    <button name="deleteBtn" value="<%= post.id %>">삭제</button></p>
+</form>
+
+<% }else{ %>
+<form action="/delete" method="POST" class="inlineForm">
+  <p class="inlineForm"><%=post.content%>
+    <button name="deleteBtn" value="<%= post.id %>">삭제</button></p>
+</form>
+<% } %>
 <% }); %>
 
 
